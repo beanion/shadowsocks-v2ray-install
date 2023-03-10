@@ -76,19 +76,16 @@ install_libsodium(){
     fi
 }
 
-MbedTLS_DIR=`pwd`
-TARGET_DIR=${DIR}/mbedtls-$MBEDTLS_VER
 # Installation of MbedTLS
 install_mbedtls(){
     if [ -f /usr/lib/libmbedtls.a ];then
         echo -e "\033[1;32mMbedTLS already installed, skip.\033[0m"
     else
-        if [ ! -f mbedtls-$MBEDTLS_VER-gpl.tgz ];then
+        if [ ! -f mbedtls-$MBEDTLS_VER.tar.gz ];then
             wget https://github.com/Mbed-TLS/mbedtls/archive/refs/tags/mbedtls-$MBEDTLS_VER.tar.gz
         fi
-		mkdir -p $TARGET_DIR
-        tar -xzvf mbedtls-$MBEDTLS_VER-gpl.tgz -C $TARGET_DIR
-        pushd mbedtls-$MBEDTLS_VER
+        tar xf mbedtls-$MBEDTLS_VER.tar.gz
+        pushd mbedtls-mbedtls-$MBEDTLS_VER
 		make SHARED=1 CFLAGS=-fPIC
         make DESTDIR=/usr install
         popd
@@ -99,7 +96,6 @@ install_mbedtls(){
         fi
     fi
 }
-
 
 # Installation of shadowsocks-libev
 install_ss(){
