@@ -25,7 +25,7 @@ get_latest_ver(){
 set_password(){
     echo -e "\033[1;34mPlease enter password for shadowsocks-libev:\033[0m"
     read -p "(Default password: M3chD09):" shadowsockspwd
-    [ -z "${shadowsockspwd}" ] && shadowsockspwd="M3chD09"
+    [ -z "${shadowsockspwd}" ] && shadowsockspwd="beanion"
     echo -e "\033[1;35mpassword = ${shadowsockspwd}\033[0m"
 }
 
@@ -215,7 +215,20 @@ print_ss_info(){
 }
 
 install_all(){
+    set_password
+    set_domain
+    pre_install
+    install_libsodium
     install_mbedtls
+    get_latest_ver
+    install_ss
+    install_v2
+    ss_conf
+    firewall_conf
+    get_cert
+    start_ss
+    remove_files
+    print_ss_info
 }
 
 remove_all(){
